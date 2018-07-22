@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Simplification: Using a ListView instead of a RecyclerView
         ListView listView = findViewById(R.id.sandwiches_listview);
+
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
