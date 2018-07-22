@@ -13,7 +13,7 @@ import java.util.List;
 
 public class JsonUtils {
 
-    public static Sandwich parseSandwichJson(String json) throws JSONException{
+    public static Sandwich parseSandwichJson(String json) {
         final String MAINNAME = "mainName";
         final String ALSOKNOWNAS = "alsoKnownAs";
         final String PLACEOFORIGIN = "placeOfOrigin";
@@ -38,14 +38,18 @@ public class JsonUtils {
             image = sandwichDetail.getString(IMAGE);
             JSONArray ingredients = sandwichDetail.getJSONArray(INGREDIENTS);
             sandwichIngredients = new ArrayList<>();
-            for (int i = 0; i < ingredients.length();i++) {
-                sandwichIngredients.add(ingredients.getString(i));
+            if (ingredients.length() != 0) {
+                for (int i = 0; i < ingredients.length(); i++) {
+                    sandwichIngredients.add(ingredients.getString(i));
+                }
             }
 
             JSONArray alsoKnownAs = name.getJSONArray(ALSOKNOWNAS);
             sandwichAlsoKnownAs = new ArrayList<>();
-            for (int i = 0; i < alsoKnownAs.length();i++) {
-                sandwichAlsoKnownAs.add(alsoKnownAs.getString(i));
+            if (alsoKnownAs.length() != 0) {
+                for (int i = 0; i < alsoKnownAs.length(); i++) {
+                    sandwichAlsoKnownAs.add(alsoKnownAs.getString(i));
+                }
             }
 
         } catch (JSONException e) {
@@ -54,5 +58,7 @@ public class JsonUtils {
         sandwich = new Sandwich(mainName, sandwichAlsoKnownAs, placeOfOrigin, description, image, sandwichIngredients);
 
        return sandwich;
+
+
     }
 }

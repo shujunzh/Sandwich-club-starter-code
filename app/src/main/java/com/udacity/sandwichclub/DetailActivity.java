@@ -30,19 +30,20 @@ public class DetailActivity extends AppCompatActivity {
     private TextView descriptionTv;
     private TextView ingredientsTv;
     Sandwich sandwich = null;
+    int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        sandwichIv = (ImageView)findViewById(R.id.image_iv);
-        alsoKnownAsTv = (TextView)findViewById(R.id.also_known_tv);
-        alsoKnownAs_labelTv = (TextView)findViewById(R.id.also_known_as_label);
-        placeOfOriginTv = (TextView)findViewById(R.id.origin_tv);
-        placeOfOrigin_labelTv = (TextView)findViewById(R.id.origin_label);
-        ingredientsTv = (TextView)findViewById(R.id.ingredients_tv);
-        descriptionTv = (TextView)findViewById(R.id.description_tv);
+        sandwichIv = findViewById(R.id.image_iv);
+        alsoKnownAsTv = findViewById(R.id.also_known_tv);
+        alsoKnownAs_labelTv = findViewById(R.id.also_known_as_label);
+        placeOfOriginTv = findViewById(R.id.origin_tv);
+        placeOfOrigin_labelTv = findViewById(R.id.origin_label);
+        ingredientsTv = findViewById(R.id.ingredients_tv);
+        descriptionTv = findViewById(R.id.description_tv);
 
 
 
@@ -52,22 +53,23 @@ public class DetailActivity extends AppCompatActivity {
             closeOnError();
         }
 
-        int position = intent.getIntExtra(EXTRA_POSITION, DEFAULT_POSITION);
-        if (position == DEFAULT_POSITION) {
-            // EXTRA_POSITION not found in intent
-            closeOnError();
-            return;
+
+        if (intent != null) {
+            position = intent.getIntExtra(EXTRA_POSITION, DEFAULT_POSITION);
+            if (position == DEFAULT_POSITION) {
+                // EXTRA_POSITION not found in intent
+                closeOnError();
+                return;
+            }
         }
 
 
-        try {
+
+
             String[] sandwiches = getResources().getStringArray(R.array.sandwich_details);
             String json = sandwiches[position];
             sandwich = JsonUtils.parseSandwichJson(json);
-        } catch (JSONException e) {
-            Log.e("Error", e.getMessage());
-            e.printStackTrace();
-        }
+       
         if (sandwich == null) {
             // Sandwich data unavailable
             closeOnError();
